@@ -1,0 +1,43 @@
+/**
+*定义车辆的四轴加速度
+*/
+-- 模块名称DefAcceleration
+DefAcceleration DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- 导出描述
+EXPORTS AccelerationSet4Way;
+
+-- 导入无
+IMPORTS ;
+	
+	-- 定义车辆四轴加速度 SEQUENCE组合类型
+	AccelerationSet4Way ::= SEQUENCE {
+		long Acceleration, -- 纵向加速度。向前加速为正，反向为负。
+		lat Acceleration,  -- 横向加速度。向右加速为正，反向为负。
+		vert VerticalAcceleration, -- 垂直加速度。沿重力方向向下为正，反向为负。
+		yaw YawRate -- 横摆角速度。顺时针旋转为正，反向为负。
+	}
+	
+	-- 定义车辆加速度
+	Acceleration ::= INTEGER (-2000..2001)
+	-- LSB units are 0.01 m/s^2 
+	-- the value 2000 shall be used for values greater than 2000 
+	-- the value -2000 shall be used for values less than -2000 
+	-- a value of 2001 shall be used for Unavailable
+	
+	VerticalAcceleration ::= INTEGER (-127..127)
+	--定义Z轴方向的加速度大小，Z轴方向竖直向下，沿着Z轴方向为正。
+	-- 分辨率为0.02 G，G为重力加速度值9.80665 m/s2。
+	-- LSB units of 0.02 G steps over -2.52 to +2.54 G
+	-- The value +127 shall be used for ranges >= 2.54 G
+	-- The value -126 shall be used for ranges <= 2.52 G
+	-- The value -127 shall be used for unavailable
+	
+	YawRate ::= INTEGER (-32767..32767)
+	-- 车辆横摆角速度。指汽车绕垂直轴的偏转，该偏转的大小代表汽车的稳定程度。如果偏转角速度达
+	-- 到一个阈值，说明汽车发生测滑或者甩尾等危险工况。
+	-- 顺时针旋转为正，逆时针为负。
+	-- 数据分辨率为0.01°/s。
+	-- LSB units of 0.01 degrees per second (signed)
+	
+END

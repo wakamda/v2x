@@ -1,0 +1,42 @@
+BSM DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- 导出描述
+EXPORTS BasicSafetyMessage;
+
+-- 导入描述
+IMPORTS AccelerationSet4Way FROM DefAcceleration
+		BrakeSystemStatus FROM VehBrake
+		VehicleSize FROM VehSize
+		Position3D, PositionConfidenceSet FROM DefPosition
+		DSecond FROM DefTime
+		TransmissionState FROM VehStatus
+		Speed, Heading, SteeringWheelAngle, MotionConfidenceSet FROM DefMotion
+		MsgCount FROM MsgFrame
+		VehicleClassification FROM VehClass
+		VehicleSafetyExtensions FROM VehSafetyExt;
+	
+	BasicSafetyMessage ::= SEQUENCE {
+		msgCnt MsgCount,						-- 消息编号，用于收包的监控和丢包的统计
+		-- 8位位组定义的字符串
+		id OCTET STRING (SIZE(8)),				-- 车辆ID
+		secMark DSecond,						-- 一分钟内的毫秒时刻
+
+		pos Position3D, 						-- 三维的坐标位置，经纬度和高程
+		accuracy PositionConfidenceSet,			-- 三维坐标的精度
+		
+		transmission TransmissionState,			-- 车辆档位状态
+
+		speed Speed,							-- 速度
+		heading Heading,						-- 航向角
+		angle SteeringWheelAngle OPTIONAL,      -- 方向盘转角
+		motionCfd MotionConfidenceSet OPTIONAL, -- 车速精度、航向精度和方向盘转角的精度
+		accelSet AccelerationSet4Way,       	-- 四轴加速度
+		brakes BrakeSystemStatus,               -- 刹车系统状态
+		size VehicleSize,						-- 车身尺寸
+		vehicleClass VehicleClassification,     -- 车辆种类
+		-- VehicleClassification includes BasicVehicleClass and other extendible type
+		safetyExt VehicleSafetyExtensions OPTIONAL,-- 除了基本安全信息之外的其他信息
+		...
+	}
+	
+END

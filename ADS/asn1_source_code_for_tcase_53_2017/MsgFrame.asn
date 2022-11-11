@@ -1,0 +1,30 @@
+-- 模块名称MsgFrame
+MsgFrame DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+-- imports and exports
+
+-- 导出
+EXPORTS MsgCount;
+
+-- 导入
+IMPORTS BasicSafetyMessage FROM BSM
+		MapData FROM Map
+		RoadsideSafetyMessage FROM RSM
+		SPAT FROM SignalPhaseAndTiming
+		RoadSideInformation FROM RSI;
+	
+	-- Main message frame
+	MessageFrame ::= CHOICE { 
+		bsmFrame BasicSafetyMessage,
+		mapFrame MapData,
+		rsmFrame RoadsideSafetyMessage,
+		spatFrame SPAT,
+		rsiFrame RoadSideInformation,
+		...
+	}
+	
+	-- 发送方为自己发送的同类消息，依次进行编号。编号数值为0～127，循环使用。
+	-- 该数据字段用于接收方对来自同一发送方的同一类消息，进行连续收包的监控和丢包的统计
+	MsgCount ::= INTEGER (0..127)
+	
+END
