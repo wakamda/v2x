@@ -1,6 +1,5 @@
 /**
- * Author: WANGYizhi
- * Created: Tue Sep 06 17:32:36 CST 2016
+ * 地图消息体
  */
 Map DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
@@ -11,10 +10,11 @@ IMPORTS MinuteOfTheYear FROM DefTime
 		MsgCount FROM MsgFrame
 		NodeList FROM MapNode;
 	
+	-- 组合类型
 	MapData ::=	SEQUENCE {
-		msgCnt MsgCount,
-		timeStamp MinuteOfTheYear OPTIONAL,
-		nodes NodeList,
+		msgCnt MsgCount,						-- 消息编号，用于收包的监控和丢包的统计
+		timeStamp MinuteOfTheYear OPTIONAL,		-- 表示这一年已经过去的总分钟数
+		nodes NodeList,							-- 节点列表
 		-- intersections or road endpoints
 		...
 	}

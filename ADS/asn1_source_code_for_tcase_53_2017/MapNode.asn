@@ -1,6 +1,7 @@
 /**
- * Author: WANGYizhi
- * Created: Fri Sep 16 11:50:25 CST 2016
+ * 描述了地图节点这个概念
+ * 节点作为路端的一个端点，保存着本端点到前一个端点之间的路段信息，这个路段叫做上游路端
+ * 而一个RSU存储着很多个节点（因为RSU一般放在路口处），这些节点组合成一个节点列表
  */
 MapNode DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
@@ -10,42 +11,35 @@ EXPORTS NodeList, DescriptiveName, NodeReferenceID;
 IMPORTS Position3D FROM DefPosition
 		LinkList FROM MapLink;
 	
+	-- 
 	NodeList ::= SEQUENCE (SIZE(1..32)) OF Node
 	
+	-- 地图节点。节点是地图的最基本组成部分，可以是交叉路口，也可以是一个路段的端点。在地图上，顺序的两个节点确定一条有向路段。
+	-- 节点属性包括名称、ID、位置以及节点相连的上游路段集合。
+	-- 一个节点中包含的路段，均以该节点作为下游端点。而从该节点出发的路段，则归属于路段下游节点的数据中。
 	Node ::= SEQUENCE {
-		-- intersection or road endpoint
-		name DescriptiveName OPTIONAL,
-		-- Node name
-		id NodeReferenceID,
-		-- A globally unique value set,
-		-- consisting of a regionID and
-		-- node ID assignment
-		refPos Position3D, 
-		-- 3D position of the center of this Node.
-		-- This position is also the reference position for the elements inside
-		inLinks LinkList OPTIONAL,
-		-- all the links enter this Node
+		name DescriptiveName OPTIONAL,		-- 名称
+		id NodeReferenceID,					-- 节点id
+		refPos Position3D, 					-- 三维的坐标位置，经纬度和高程。refPos字段用来提供当前数据帧作用范围内的参考三维位置坐标，帧中所有的位置偏移量，均基于该参考坐标计算。真实位置坐标等于偏移量加上参考坐标。
+		inLinks LinkList OPTIONAL			-- 本路段（上游）列表及属性
 		...
 	}
 	
+	-- 名称。其类型为IA5String (类似于ASCII字符串).
 	DescriptiveName ::= IA5String (SIZE(1..63))
 	
+	-- 节点ID。节点ID是由一个全局唯一的地区ID和一个地区内部唯一的节点ID组成。
 	NodeReferenceID ::= SEQUENCE {
 		region RoadRegulatorID OPTIONAL,
-		-- a globally unique regional assignment value
-		-- typical assigned to a regional DOT authority
-		-- the value zero shall be used for testing needs
-		id NodeID
-		-- a unique mapping to the node
-		-- in question within the above region of use		
+		id NodeID	
 		}
 	
+	-- 定义地图中各个划分区域的ID号。
+	-- 数值0仅用于测试。
 	RoadRegulatorID ::= INTEGER (0..65535)
-	-- The value zero shall be used for testing only
 	
+	-- 一个节点的ID在同一个区域内是唯一的。
+	-- 数值0～255预留为测试使用。
 	NodeID ::= INTEGER (0..65535)
-	-- The values zero through 255 are allocated for testing purposes 
-	-- Note that the value assigned to a node will be 
-	-- unique within a given regional ID only
 	
 END

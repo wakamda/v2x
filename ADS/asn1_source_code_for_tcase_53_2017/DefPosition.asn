@@ -10,13 +10,17 @@ DefPosition DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 EXPORTS Latitude, Longitude, Elevation, PositionConfidenceSet, Position3D;
 IMPORTS ;
 	
+	-- 定义纬度数值，北纬为正，南纬为负。分辨率1e-7°。
+	-- LSB = 1/10 micro degree 
+	-- Providing a range of plus-minus 90 degrees提供正负90度的范围
 	Latitude ::= INTEGER (-900000000..900000001) 
-	-- LSB = 1/10 micro degree 
-	-- Providing a range of plus-minus 90 degrees
+
 	
-	Longitude ::= INTEGER (-1799999999..1800000001) 
+	-- 定义经度数值。东经为正，西经为负。分辨率为1e-7°。
 	-- LSB = 1/10 micro degree 
-	-- Providing a range of plus-minus 180 degrees
+	-- Providing a range of plus-minus 180 degrees提供正负180度的范围
+	Longitude ::= INTEGER (-1799999999..1800000001) 
+
 	
 	-- 定义车辆海拔高程。
 	-- 分辨率为0.1 m。数值-4096表示无效数值。

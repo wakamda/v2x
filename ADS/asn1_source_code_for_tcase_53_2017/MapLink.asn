@@ -1,6 +1,5 @@
 /**
- * Author: WANGYizhi
- * Created: Fri Sep 16 11:53:31 CST 2016
+ * 定义了本路端（上游路段）的信息
  */
 MapLink DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
@@ -17,42 +16,37 @@ IMPORTS DescriptiveName, NodeReferenceID FROM MapNode
 	
 	LinkList ::= SEQUENCE (SIZE(1..32)) OF Link
 	
+	-- 定义路段。从一个节点到相邻另一个节点的道路称为一个有向路段。
+	-- 组合类型
 	Link ::= SEQUENCE {
-		name DescriptiveName OPTIONAL,
-		-- Link name
+		name DescriptiveName OPTIONAL,			-- 路段名称
 		
-		upstreamNodeId NodeReferenceID,
-		-- this link is from upstreamNode to the Node it belongs to
+		upstreamNodeId NodeReferenceID,			-- 上游节点ID
 		
-		speedLimits SpeedLimitList OPTIONAL,
-		-- List all the speed limits
+		speedLimits SpeedLimitList OPTIONAL,	-- 限速列表
 		
-		laneWidth LaneWidth,
-		-- Width of each lane
+		laneWidth LaneWidth,					-- 车道宽度
 		
-		points PointList OPTIONAL,
-		-- Define road points along the center of this link
+		points PointList OPTIONAL,				-- 节点列表
 		
-		movements MovementList OPTIONAL,
-		-- Define movements at intersection
+		movements MovementList OPTIONAL,		-- 下游节点列表及本道路信号灯列表
 		
-		lanes LaneList,
-		-- Lanes belong to this link
+		lanes LaneList,							-- 本路段车道
 		...
 	}
 	
+	-- 描述一条路段与下游路段的连接关系列表。
+	-- 每条路段对应的下游路段可能有多个，比如十字路口，六道口等
 	MovementList ::= SEQUENCE (SIZE(1..32)) OF Movement
 	
+	-- 描述道路与下游路段的连接关系，以及该连接对应的本地路口处信号灯相位ID
+	-- 此处的相位ID事实上也是MAP消息与SPAT消息的唯一关联。车辆在确定了转向行为后，能够通过该
+	-- 相位ID数据，查看到SPAT中对应的相位实时状态，从而获得行车过程中的信号灯数据辅助。
 	Movement ::= SEQUENCE {
-		remoteIntersection NodeReferenceID,
-		-- This entry indicates the downstream intersection of the link this lane connects to. 
-		-- This provides a means to create meshes of lanes
+		remoteIntersection NodeReferenceID,     -- 下游节点id
 		
-		phaseId PhaseID OPTIONAL
-		-- The matching signal group send by
-		-- the SPAT message for this lane/maneuver.
-		-- Shall be present unless the connectingLane
-		-- has no signal group (is un-signalized)
+		phaseId PhaseID OPTIONAL				-- 信号灯相位id
+
 	}
 	
 END

@@ -1,6 +1,6 @@
 /**
- * Author: WANGYizhi
- * Created: Fri Sep 16 11:56:58 CST 2016
+ * 限速集合，是路段的属性
+ * 其嵌套逻辑是：路段-限速集合（限速列表）-单个限速-1.速度值 2.速度值的属性
  */
 MapSpeedLimit DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
@@ -9,26 +9,24 @@ MapSpeedLimit DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 EXPORTS SpeedLimitList;
 IMPORTS Speed FROM DefMotion;
 	
+	-- 定义路段或车道的限速列表。
 	SpeedLimitList ::= SEQUENCE (SIZE(1..9)) OF RegulatorySpeedLimit
 	
+	-- 定义限速属性。包括限速类型以及所规定的限制速度。
 	RegulatorySpeedLimit ::= SEQUENCE {
-		type SpeedLimitType,
-		-- The type of regulatory speed which follows
-		speed Speed
-		-- The speed in units of 0.02 m/s
-		-- See Section 11 for converting and translating
-		-- speed expressed in mph into units of m/s
+		type SpeedLimitType,	-- speed的属性
+		speed Speed				-- 速度值
 		}
 	
+	-- 限速类型，指示给出的限速大小对应的参考类型。
 	SpeedLimitType ::= ENUMERATED {
-		unknown, -- Speed limit type not available
-		maxSpeedInSchoolZone, -- Only sent when the limit is active
-		maxSpeedInSchoolZoneWhenChildrenArePresent, -- Sent at any time
-		maxSpeedInConstructionZone, -- Used for work zones, incident zones, etc.
-		-- where a reduced speed is present
-		vehicleMinSpeed,
-		vehicleMaxSpeed, -- Regulatory speed limit for general traffic
-		vehicleNightMaxSpeed,
+		unknown, -- 限速类型不可用
+		maxSpeedInSchoolZone, -- 只在限制生效时发送
+		maxSpeedInSchoolZoneWhenChildrenArePresent, -- 在任何时候都发送
+		maxSpeedInConstructionZone, -- 用于工作区域，事故区域等。
+		vehicleMinSpeed, -- 限速最低
+		vehicleMaxSpeed, -- 一般交通的法定速度限制最高
+		vehicleNightMaxSpeed,-- 夜间最高限速
 		truckMinSpeed,
 		truckMaxSpeed,
 		truckNightMaxSpeed,

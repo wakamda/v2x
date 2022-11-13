@@ -1,6 +1,7 @@
 /**
- * Author: WANGYizhi
- * Created: Tue Sep 06 18:50:17 CST 2016
+ * 定义经纬度和高度的偏差值
+ * 经纬度和高度的偏差值的数据表示和真实数据表示方法不同，都分别由7种比特位组表示，分辨率都相同，所以能表示的范围不同 
+ * 三维偏差值和node中的refPos值（参考值）对应，三维偏移量也就是偏差值，都是由真实值减去参考值计算出来的
  */
 DefPositionOffset DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
@@ -9,22 +10,29 @@ DefPositionOffset DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 EXPORTS PositionOffsetLLV;
 IMPORTS Longitude, Latitude, Elevation FROM DefPosition;
 	
+	-- 定义三维的偏差值（相对位置）（相对经纬度和相对高程）。约定偏差值等于真实值减去参考值。
 	PositionOffsetLLV ::= SEQUENCE {
-		offsetLL PositionOffsetLL,
-		-- offset in lon/lat
-		offsetV VerticalOffset OPTIONAL
-		-- offset in elevation
+		offsetLL PositionOffsetLL,		-- 经纬度偏差
+		offsetV VerticalOffset OPTIONAL -- 高度偏差
 	}
 	
-	OffsetLL-B12 ::= INTEGER (-2048..2047) 
+	-- 12比特数值，表示当前位置点关于参考位置点的经纬度偏差。
+	-- 值得注意的是，根据纬度的不同，相同的经纬度偏差值对应的实际球面距离可能不同。
+	-- 关于参考点，向东或向北偏移，数值为正，反之为负。分辨率为1e-7°。
 	-- A range of +- 0.0002047 degrees 
 	-- In LSB units of 0.1 microdegrees 
-	OffsetLL-B14 ::= INTEGER (-8192..8191) 
+	OffsetLL-B12 ::= INTEGER (-2048..2047) 
+
+	-- 14比特数值
 	-- A range of +- 0.0008191 degrees 
 	-- In LSB units of 0.1 microdegrees
-	OffsetLL-B16 ::= INTEGER (-32768..32767) 
+	OffsetLL-B14 ::= INTEGER (-8192..8191) 
+
+	-- 16比特数值
 	-- A range of +- 0.0032767 degrees 
 	-- In LSB units of 0.1 microdegrees
+	OffsetLL-B16 ::= INTEGER (-32768..32767) 
+
 	OffsetLL-B18 ::= INTEGER (-131072..131071) 
 	-- A range of +- 0.0131071 degrees 
 	-- In LSB units of 0.1 microdegrees
@@ -35,54 +43,60 @@ IMPORTS Longitude, Latitude, Elevation FROM DefPosition;
 	-- A range of +- 0.8388607 degrees 
 	-- In LSB units of 0.1 microdegrees
 	
+	-- 24比特相对经纬度位置，表示当前位置点关于参考位置点的经纬度偏差。由两个12比特的经度、纬度偏差值组成。
+	-- ranges of +- 0.0002047 degrees 
+	-- ranges of +- 22.634554 meters at the equator
 	Position-LL-24B ::= SEQUENCE { 
-		-- ranges of +- 0.0002047 degrees 
-		-- ranges of +- 22.634554 meters at the equator
 		lon OffsetLL-B12,
 		lat OffsetLL-B12
 		}
-	
+	-- 28比特相对经纬度位置，表示当前位置点关于参考位置点的经纬度偏差。由两个14比特的经度、纬度偏差值组成。
+	-- ranges of +- 0.0008191 degrees 
+	-- ranges of +- 90.571389 meters at the equator
 	Position-LL-28B ::= SEQUENCE { 
-		-- ranges of +- 0.0008191 degrees 
-		-- ranges of +- 90.571389 meters at the equator
 		lon OffsetLL-B14,
 		lat OffsetLL-B14
 		}
 	
+	-- 32比特相对经纬度位置，表示当前位置点关于参考位置点的经纬度偏差。由两个16比特的经度、纬度偏差值组成。
+	-- ranges of +- 0.0032767 degrees 
+	-- ranges of +- 362.31873 meters at the equator
 	Position-LL-32B ::= SEQUENCE { 
-		-- ranges of +- 0.0032767 degrees 
-		-- ranges of +- 362.31873 meters at the equator
 		lon OffsetLL-B16,
 		lat OffsetLL-B16
 		}
 	
+	-- 36比特相对经纬度位置
+	-- ranges of +- 0.0131071 degrees 
+	-- ranges of +- 01.449308 Kmeters at the equator
 	Position-LL-36B ::= SEQUENCE { 
-		-- ranges of +- 0.0131071 degrees 
-		-- ranges of +- 01.449308 Kmeters at the equator
 		lon OffsetLL-B18,
 		lat OffsetLL-B18
 		}
-	
+
+	-- 44比特相对经纬度位置
+	-- ranges of +- 0.2097151 degrees 
+	-- ranges of +- 23.189096 Kmeters at the equator
 	Position-LL-44B ::= SEQUENCE { 
-		-- ranges of +- 0.2097151 degrees 
-		-- ranges of +- 23.189096 Kmeters at the equator
 		lon OffsetLL-B22,
 		lat OffsetLL-B22
 		}
 	
+	-- 48比特相对经纬度位置
+	-- ranges of +- 0.8388607 degrees 
+	-- ranges of +- 92.756481 Kmeters at the equator
 	Position-LL-48B ::= SEQUENCE { 
-		-- ranges of +- 0.8388607 degrees 
-		-- ranges of +- 92.756481 Kmeters at the equator
 		lon OffsetLL-B24,
 		lat OffsetLL-B24
 		}
 	
+	-- 64比特经纬度位置。实际上，该尺度采用了真实经纬度数据进行描述，非相对位置。
 	Position-LLmD-64b ::= SEQUENCE {
-		-- a full 32b Lat/Lon range
 		lon Longitude,
 		lat Latitude
 		}
 	
+	-- 经纬度偏差，来描述一个坐标点的相对位置。约定偏差值等于真实值减去参考值。提供了7 种尺度的描述方式。
 	PositionOffsetLL ::= CHOICE { 
 		-- Locations with LL content Span at the equator when using a zoom of one:
 		position-LL1 Position-LL-24B, 
@@ -101,9 +115,8 @@ IMPORTS Longitude, Latitude, Elevation FROM DefPosition;
 		-- node is a full 32b Lat/Lon range
 	}
 	
+	-- 定义垂直方向位置偏差。提供了7种尺度范围的偏差表示方式。
 	VerticalOffset ::= CHOICE { 
-		-- Vertical Offset 
-		-- All below in steps of 10cm above or below the reference ellipsoid
 		offset1 VertOffset-B07, -- with a range of +- 6.3 meters vertical
 		offset2 VertOffset-B08, -- with a range of +- 12.7 meters vertical
 		offset3 VertOffset-B09, -- with a range of +- 25.5 meters vertical
@@ -113,6 +126,8 @@ IMPORTS Longitude, Latitude, Elevation FROM DefPosition;
 		elevation Elevation -- with a range of -409.5 to + 6143.9 meters
 		}
 	
+	-- 7比特的数据，定义垂直方向（Z轴）关于参考位置点的偏差。顺着Z轴方向为正。数据分辨率为10 cm。
+	-- -64数值表示未知大小。
 	VertOffset-B07 ::= INTEGER (-64..63) 
 	-- LSB units of of 10 cm 
 	-- with a range of +- 6.3 meters vertical 

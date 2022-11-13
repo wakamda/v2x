@@ -14,38 +14,46 @@ IMPORTS PointList FROM MapPoint
 	
 	LaneList ::= SEQUENCE (SIZE(1..32)) OF Lane
 	
+	-- 车道
+	-- 包含ID、共享属性、车道出口的允许转向行为、车道与下游路段车道的连接关系列表以及车道中间点列表。
 	Lane ::= SEQUENCE {
-		laneID LaneID,
-		-- The unique ID number assigned
-		-- to this lane object
-		laneAttributes LaneAttributes OPTIONAL,
+		laneID LaneID,								-- 车道id
+
+		laneAttributes LaneAttributes OPTIONAL,		-- 车道共享属性和其他属性
 		-- Define basic attribute of lane
-		maneuvers AllowedManeuvers OPTIONAL,
+		maneuvers AllowedManeuvers OPTIONAL,		-- 车道转向属性
 		-- the permitted maneuvers for this lane
-		connectsTo ConnectsToList OPTIONAL,	
+		connectsTo ConnectsToList OPTIONAL,			-- 下游车道的连接列表及属性
 		-- connection to downsteam lanes
-		speedLimits SpeedLimitList OPTIONAL,
+		speedLimits SpeedLimitList OPTIONAL,		--车道限速列表
 		-- List all the speed limits
-		points PointList OPTIONAL,
+		points PointList OPTIONAL,					-- 节点列表
 		-- Define road points and segments
 		...
 	}
 	
-	LaneID ::= INTEGER (0..255) 
-	-- the value 0 shall be used when the lane ID is 
-	-- not available or not known 
+	-- 车道id
+	-- 车道定义在每一条有向路段上，同一条有向路段上的每个车道，都拥有一个单独的ID。车道号，以该车道行驶方向为参考，自左向右从1开始编号。
+	-- ID为0表示无效ID。
 	-- the value 255 is reserved for future use
+	LaneID ::= INTEGER (0..255) 
 	
+	
+	-- 定义车道宽度
+	-- 分辨率为1 cm
 	LaneWidth ::= INTEGER (0..32767) 
-	-- units of 1 cm
 	
+	-- 定义路段中每条车道，在下游路口处与下游路段中车道的转向连接关系列表。
 	ConnectsToList ::= SEQUENCE (SIZE(1..8)) OF Connection
 	
+	-- 定义当前车道与下游路段中车道的连接关系。
+	-- 包括下游路段出口节点ID、连接的下游路段车道基本信息以及对应的信号灯相位号。在车道连接中
+	-- 定义的相位号，是对DF_Movement中定义转向的相位号的一个补充。当某一些车道在转向时需要参考一
+	-- 些特殊的信号灯相位（而不是DF_Movement中定义的默认相位），则应该将其定义在本数据帧中。
 	Connection::= SEQUENCE {
-		remoteIntersection NodeReferenceID,
-		-- This entry indicates the downstream intersection of the link this lane connects to. 
-		-- This provides a means to create meshes of lanes
-		connectingLane ConnectingLane OPTIONAL,
+		remoteIntersection NodeReferenceID,			--下游节点id
+
+		connectingLane ConnectingLane OPTIONAL,		-- 下游车道及转向允许
 		-- The index of the connecting lane and also
 		-- the maneuver from the current lane to it
 		-- When we want to list the allowed lanes of the next link
@@ -57,15 +65,17 @@ IMPORTS PointList FROM MapPoint
 		-- has no signal group (is un-signalized)
 	}
 	
+	-- 用于定位上游车道转向连接的下游车道。
+	-- 包括下游车道ID以及该转向的允许行驶行为，下游车道ID的作用范围是该车道所在的路段。
 	ConnectingLane ::= SEQUENCE {
-		lane LaneID, 
-		-- Index of the connecting lane
-		maneuver AllowedManeuvers OPTIONAL
+		lane LaneID, 						-- 下游车道id
+		maneuver AllowedManeuvers OPTIONAL	-- 下游车道转向行为
 		-- The Maneuver between
 		-- the enclosing lane and this lane
 		-- at the stop line to connect them
 		}
 	
+	-- 定义一个（机动车）车道的允许转向行为。
 	AllowedManeuvers ::= BIT STRING {
 		-- With bits as defined:
 		-- Allowed maneuvers at path end (stop line)
@@ -103,22 +113,18 @@ IMPORTS PointList FROM MapPoint
 		-- used to align to 12 Bit Field
 		} (SIZE(12))
 	
+	-- 车道属性集合
 	LaneAttributes ::= SEQUENCE {
-		shareWith LaneSharing OPTIONAL,
-		laneType LaneTypeAttributes
+		shareWith LaneSharing OPTIONAL,		-- 共享属性
+		laneType LaneTypeAttributes			-- 分类各种车道的属性
 	}
 	
+	-- 定义车道被共享的情况。在已有的车道属性定义基础上，该数据表示此车道还会有其他的交通参与者者出现，并可能拥有相同的路权。
+	-- 数据中每一位置“1”表示对应的车道共享属性生效。
 	LaneSharing ::= BIT STRING {
-		-- With bits as defined:
 		overlappingLaneDescriptionProvided (0),
-		-- Assert when another lane object is present to describe the
-		-- path of the overlapping shared lane
-		-- this construct is not used for lane objects which simply cross
 		multipleLanesTreatedAsOneLane (1),
-		-- Assert if the lane object path and width details represents
-		-- multiple lanes within it that are not further described
-		-- Various modes and type of traffic that may share this lane:
-		otherNonMotorizedTrafficTypes (2), -- horse drawn etc.
+		otherNonMotorizedTrafficTypes (2),
 		individualMotorizedVehicleTraffic (3),
 		busVehicleTraffic (4),
 		taxiVehicleTraffic (5),
@@ -127,22 +133,22 @@ IMPORTS PointList FROM MapPoint
 		trackedVehicleTraffic (8),
 		pedestrianTraffic (9)
 		} (SIZE (10))
-		-- All zeros would indicate 'not shared' and 'not overlapping'
 		
+	-- 定义不同类别车道的属性集合
 	LaneTypeAttributes ::= CHOICE {
-		vehicle LaneAttributes-Vehicle, -- motor vehicle lanes
-		crosswalk LaneAttributes-Crosswalk, -- pedestrian crosswalks
-		bikeLane LaneAttributes-Bike, -- bike lanes
-		sidewalk LaneAttributes-Sidewalk, -- pedestrian sidewalk paths
-		median LaneAttributes-Barrier, -- medians & channelization
-		striping LaneAttributes-Striping, -- roadway markings
-		trackedVehicle LaneAttributes-TrackedVehicle, -- trains and trolleys
-		parking LaneAttributes-Parking, -- parking and stopping lanes
+		vehicle LaneAttributes-Vehicle, 				-- 行车道
+		crosswalk LaneAttributes-Crosswalk, 			-- 人行横道
+		bikeLane LaneAttributes-Bike, 					-- 自行车道
+		sidewalk LaneAttributes-Sidewalk, 				-- 人行道
+		median LaneAttributes-Barrier, 					-- 车道隔离
+		striping LaneAttributes-Striping, 				-- 标线车道
+		trackedVehicle LaneAttributes-TrackedVehicle, 	-- 轨道
+		parking LaneAttributes-Parking, 				-- 停车道
 		...
 		}
 		
+	-- 车辆行驶车道的属性定义。用来描述一条车用车道的特殊属性和其允许行驶的汽车种类。
 	LaneAttributes-Vehicle ::= BIT STRING { 
-		-- With bits as defined:
 		isVehicleRevocableLane (0),
 		-- this lane may be activated or not based
 		-- on the current SPAT message contents
@@ -157,6 +163,7 @@ IMPORTS PointList FROM MapPoint
 		permissionOnRequest (7) -- e.g. to inform about a lane for e-cars
 		} (SIZE (8,...))
 		
+	-- 人行横道的属性定义。指示车道的一系列通过属性和人行辅助设施。
 	LaneAttributes-Crosswalk ::= BIT STRING { 
 		-- With bits as defined: 
 		-- MUTCD provides no suitable "types" to use here
@@ -193,6 +200,7 @@ IMPORTS PointList FROM MapPoint
 		-- Bits 9~15 reserved and set to zero
 	} (SIZE (16))
 	
+	-- 自行车道属性
 	LaneAttributes-Bike ::= BIT STRING { 
 		-- With bits as defined:
 		bikeRevocableLane (0),
@@ -223,6 +231,7 @@ IMPORTS PointList FROM MapPoint
 		-- Bits 7~15 reserved and set to zero
 		} (SIZE (16))
 		
+	-- 人行道的属性定义。
 	LaneAttributes-Sidewalk ::= BIT STRING { 
 		-- With bits as defined:
 		sidewalk-RevocableLane (0),
@@ -239,6 +248,7 @@ IMPORTS PointList FROM MapPoint
 		-- Bits 4~15 reserved and set to zero
 		} (SIZE (16))
 		
+	-- 车道隔离的属性定义。主要指示车道隔离的物理形式。
 	LaneAttributes-Barrier ::= BIT STRING { 
 		-- With bits as defined:
 		median-RevocableLane (0),
@@ -256,6 +266,8 @@ IMPORTS PointList FROM MapPoint
 		highCurbs (9) -- Bits 10~15 reserved and set to zero
 		} (SIZE (16))
 		
+	-- 标线车道的属性定义。指示了车道上网纹或者标志标线所传达的道路信息，如禁行、路线标识等，
+	-- 辅助驾驶员通过一些复杂的路口或路段，提高驾驶安全性。
 	LaneAttributes-Striping ::= BIT STRING { 
 		-- With bits as defined:
 		stripeToConnectingLanesRevocableLane (0),
@@ -276,6 +288,7 @@ IMPORTS PointList FROM MapPoint
 		-- Bits 6~15 reserved and set to zero
 		} (SIZE (16))
 		
+	-- 轨道车辆车道的属性定义。用来描述一条轨道车辆车道的特殊属性和其允许行驶的车辆种类
 	LaneAttributes-TrackedVehicle ::= BIT STRING { 
 		-- With bits as defined:
 		spec-RevocableLane (0),
@@ -288,6 +301,7 @@ IMPORTS PointList FROM MapPoint
 		spec-otherRailType (4) -- Bits 5~15 reserved and set to zero
 		} (SIZE (16))
 		
+	-- 停车车道的属性定义。指示车道允许停车的种类和停靠方式。
 	LaneAttributes-Parking ::= BIT STRING {
 		-- With bits as defined:
 		-- Parking use details, note that detailed restrictions such as

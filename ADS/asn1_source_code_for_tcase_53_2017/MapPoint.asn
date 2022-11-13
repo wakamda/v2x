@@ -1,6 +1,5 @@
 /**
- * Author: WANGYizhi
- * Created: Tue Dec 27 14:41:33 CST 2016
+ * PointList指节点列表，由一个一个的节点RoadPoint组成，节点的表示方式是通过参考三维坐标+偏移三维得出来的
  */
 MapPoint DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
@@ -9,20 +8,19 @@ MapPoint DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 EXPORTS PointList;
 IMPORTS PositionOffsetLLV FROM DefPositionOffset;
 	
-	PointList ::= SEQUENCE (SIZE(2..31)) OF RoadPoint
+	-- 定义一个有向路段上的中间位置点列表，用来表达路段上截面或片段的特殊属性。列表中所有位置点需按上游至下游顺序排列。
 	-- At least 2 points of 1 lane
 	-- entry line and exit line
 	-- points need to be listed sequatially
 	-- from upstream to downstream
+	PointList ::= SEQUENCE (SIZE(2..31)) OF RoadPoint
 	
+	
+	-- 表示完整道路上标记的一个位置点属性。
+	-- 包括相对位置、位置点处路段截面的特殊属性集合、以及该位置点到下游相邻位置点之间局部路段的特殊属性集合。
+	-- 当位置点为路段最下游的点，则其包含的下游截取路段属性为无效数据。
 	RoadPoint ::= SEQUENCE {
-		posOffset PositionOffsetLLV,
-		-- Position offset to the reference position
-		--pointAttribute PointAttributeSet OPTIONAL,
-		-- Definition of special attribute of road-point
-		--segmentAttribute SegmentAttributeSet OPTIONAL,
-		-- Definition of special attribute of road segment from this road-point to the next
-		-- if this node is the last node of this nodelist, then this segment means null
+		posOffset PositionOffsetLLV, -- 经纬度和高度的偏移量
 		...
 	}
 	

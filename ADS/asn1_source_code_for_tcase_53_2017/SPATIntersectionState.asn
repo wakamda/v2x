@@ -203,12 +203,10 @@ IMPORTS MinuteOfTheYear, DSecond, TimeMark FROM DefTime
 		-- If already started, this value is recommended to be delivered.
 		}
 	
+	-- 定义信号灯相位ID。
+	-- 数值0表示无效ID。
+	-- 简单的8相信号控制器设备可以使用1..9作为其组ID
 	PhaseID ::= INTEGER (0..255)
-	-- The value 0 shall be used when the ID is
-	-- not available or not known
-	-- the value 255 is reserved to indicate a
-	-- permanent green movement state
-	-- therefore a simple 8 phase signal controller
-	-- device might use 1..9 as its groupIDs
+
 	
 END

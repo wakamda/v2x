@@ -41,8 +41,11 @@ IMPORTS ;
 		offset DTimeOffset OPTIONAL -- time zone
 		}
 	
-	MinuteOfTheYear ::= INTEGER (0..527040) 
+	-- 当前年份，已经过去的总分钟数（UTC时间）。
+	-- 其分辨率为1分钟。该数值配合DSecond数值，则可以表示以毫秒记的全年已过去的总时间。
 	-- the value 527040 shall be used for invalid
+	MinuteOfTheYear ::= INTEGER (0..527040) 
+	
 	
 	TimeMark ::= INTEGER (0..36001) 
 	-- Tenths of a second in the current or next hour 
