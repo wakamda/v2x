@@ -1,4 +1,6 @@
--- 模块名称DefTime
+/**
+ * 时间定义
+ */
 DefTime DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
 -- imports and exports
@@ -47,6 +49,8 @@ IMPORTS ;
 	MinuteOfTheYear ::= INTEGER (0..527040) 
 	
 	
+	-- 以0.1秒为单位，定义一小时中的时间。可以表示当前小时中的时刻，也可以表示长度不超过1小时的时间段。
+	-- 分辨率为0.1秒。有效范围是0～35999。数值36000表示大于1小时的时间长度。数值36001表示无效数值。
 	TimeMark ::= INTEGER (0..36001) 
 	-- Tenths of a second in the current or next hour 
 	-- In units of 1/10th second from UTC time 

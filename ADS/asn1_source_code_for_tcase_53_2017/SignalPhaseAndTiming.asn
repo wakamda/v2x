@@ -1,6 +1,5 @@
 /**
- * Author: WANGYizhi
- * Created: Wed Nov 23 13:53:37 CST 2016
+ * SPAT信号灯信息
  */
 SignalPhaseAndTiming DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 
@@ -13,12 +12,12 @@ IMPORTS MinuteOfTheYear FROM DefTime
 		MsgCount FROM MsgFrame;
 	
 	SPAT ::= SEQUENCE {
-		msgCnt MsgCount,
-		timeStamp MinuteOfTheYear OPTIONAL,
-		name DescriptiveName OPTIONAL,
+		msgCnt MsgCount,						-- 消息编号，用于收包的监控和丢包的统计
+		timeStamp MinuteOfTheYear OPTIONAL,		-- 当前年份，已经过去的总分钟数（UTC时间）。
+		name DescriptiveName OPTIONAL,			-- RSU名称
 		-- human readable name for this collection
 		-- to be used only in debug mode
-		intersections IntersectionStateList,
+		intersections IntersectionStateList,	-- 信号灯状态
 		-- sets of SPAT data (one per intersection)
 		...
 	}

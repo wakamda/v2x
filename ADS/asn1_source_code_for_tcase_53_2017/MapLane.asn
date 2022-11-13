@@ -1,6 +1,5 @@
 /**
- * Author: WANGYizhi
- * Created: Fri Sep 16 11:47:10 CST 2016
+ * 车道信息
  */
 MapLane DEFINITIONS AUTOMATIC TAGS ::= BEGIN
 

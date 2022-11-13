@@ -18,7 +18,7 @@ IMPORTS Position3D FROM DefPosition
 	-- 节点属性包括名称、ID、位置以及节点相连的上游路段集合。
 	-- 一个节点中包含的路段，均以该节点作为下游端点。而从该节点出发的路段，则归属于路段下游节点的数据中。
 	Node ::= SEQUENCE {
-		name DescriptiveName OPTIONAL,		-- 名称
+		name DescriptiveName OPTIONAL,		-- 节点名称
 		id NodeReferenceID,					-- 节点id
 		refPos Position3D, 					-- 三维的坐标位置，经纬度和高程。refPos字段用来提供当前数据帧作用范围内的参考三维位置坐标，帧中所有的位置偏移量，均基于该参考坐标计算。真实位置坐标等于偏移量加上参考坐标。
 		inLinks LinkList OPTIONAL			-- 本路段（上游）列表及属性
