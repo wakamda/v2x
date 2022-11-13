@@ -1,0 +1,394 @@
+ASN_MODULE_SRCS=	\
+	/home/chengtao/Downloads/v2x_ads_c/BasicSafetyMessage.c	\
+	/home/chengtao/Downloads/v2x_ads_c/AccelerationSet4Way.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Acceleration.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VerticalAcceleration.c	\
+	/home/chengtao/Downloads/v2x_ads_c/YawRate.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Speed.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Heading.c	\
+	/home/chengtao/Downloads/v2x_ads_c/CoarseHeading.c	\
+	/home/chengtao/Downloads/v2x_ads_c/SteeringWheelAngle.c	\
+	/home/chengtao/Downloads/v2x_ads_c/MotionConfidenceSet.c	\
+	/home/chengtao/Downloads/v2x_ads_c/HeadingConfidence.c	\
+	/home/chengtao/Downloads/v2x_ads_c/SpeedConfidence.c	\
+	/home/chengtao/Downloads/v2x_ads_c/SteeringWheelAngleConfidence.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Latitude.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Longitude.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Elevation.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PositionConfidenceSet.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PositionConfidence.c	\
+	/home/chengtao/Downloads/v2x_ads_c/ElevationConfidence.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Position3D.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PositionOffsetLLV.c	\
+	/home/chengtao/Downloads/v2x_ads_c/OffsetLL-B12.c	\
+	/home/chengtao/Downloads/v2x_ads_c/OffsetLL-B14.c	\
+	/home/chengtao/Downloads/v2x_ads_c/OffsetLL-B16.c	\
+	/home/chengtao/Downloads/v2x_ads_c/OffsetLL-B18.c	\
+	/home/chengtao/Downloads/v2x_ads_c/OffsetLL-B22.c	\
+	/home/chengtao/Downloads/v2x_ads_c/OffsetLL-B24.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LL-24B.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LL-28B.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LL-32B.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LL-36B.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LL-44B.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LL-48B.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LLmD-64b.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PositionOffsetLL.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VerticalOffset.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VertOffset-B07.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VertOffset-B08.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VertOffset-B09.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VertOffset-B10.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VertOffset-B11.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VertOffset-B12.c	\
+	/home/chengtao/Downloads/v2x_ads_c/DSecond.c	\
+	/home/chengtao/Downloads/v2x_ads_c/DYear.c	\
+	/home/chengtao/Downloads/v2x_ads_c/DMonth.c	\
+	/home/chengtao/Downloads/v2x_ads_c/DDay.c	\
+	/home/chengtao/Downloads/v2x_ads_c/DHour.c	\
+	/home/chengtao/Downloads/v2x_ads_c/DMinute.c	\
+	/home/chengtao/Downloads/v2x_ads_c/DTimeOffset.c	\
+	/home/chengtao/Downloads/v2x_ads_c/DDateTime.c	\
+	/home/chengtao/Downloads/v2x_ads_c/MinuteOfTheYear.c	\
+	/home/chengtao/Downloads/v2x_ads_c/TimeMark.c	\
+	/home/chengtao/Downloads/v2x_ads_c/TimeOffset.c	\
+	/home/chengtao/Downloads/v2x_ads_c/TimeConfidence.c	\
+	/home/chengtao/Downloads/v2x_ads_c/MapData.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Lane.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneID.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneWidth.c	\
+	/home/chengtao/Downloads/v2x_ads_c/ConnectsToList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Connection.c	\
+	/home/chengtao/Downloads/v2x_ads_c/ConnectingLane.c	\
+	/home/chengtao/Downloads/v2x_ads_c/AllowedManeuvers.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneSharing.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneTypeAttributes.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Vehicle.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Crosswalk.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Bike.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Sidewalk.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Barrier.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Striping.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-TrackedVehicle.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Parking.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LinkList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Link.c	\
+	/home/chengtao/Downloads/v2x_ads_c/MovementList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Movement.c	\
+	/home/chengtao/Downloads/v2x_ads_c/NodeList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Node.c	\
+	/home/chengtao/Downloads/v2x_ads_c/DescriptiveName.c	\
+	/home/chengtao/Downloads/v2x_ads_c/NodeReferenceID.c	\
+	/home/chengtao/Downloads/v2x_ads_c/RoadRegulatorID.c	\
+	/home/chengtao/Downloads/v2x_ads_c/NodeID.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PointList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/RoadPoint.c	\
+	/home/chengtao/Downloads/v2x_ads_c/SpeedLimitList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/RegulatorySpeedLimit.c	\
+	/home/chengtao/Downloads/v2x_ads_c/SpeedLimitType.c	\
+	/home/chengtao/Downloads/v2x_ads_c/MessageFrame.c	\
+	/home/chengtao/Downloads/v2x_ads_c/MsgCount.c	\
+	/home/chengtao/Downloads/v2x_ads_c/RoadSideInformation.c	\
+	/home/chengtao/Downloads/v2x_ads_c/RTEList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/RTEData.c	\
+	/home/chengtao/Downloads/v2x_ads_c/EventType.c	\
+	/home/chengtao/Downloads/v2x_ads_c/EventSource.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Radius.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Description.c	\
+	/home/chengtao/Downloads/v2x_ads_c/RSITimeDetails.c	\
+	/home/chengtao/Downloads/v2x_ads_c/RSIPriority.c	\
+	/home/chengtao/Downloads/v2x_ads_c/ReferencePathList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/ReferencePath.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PathPointList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/ReferenceLinkList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/ReferenceLink.c	\
+	/home/chengtao/Downloads/v2x_ads_c/ReferenceLanes.c	\
+	/home/chengtao/Downloads/v2x_ads_c/RTSList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/RTSData.c	\
+	/home/chengtao/Downloads/v2x_ads_c/SignType.c	\
+	/home/chengtao/Downloads/v2x_ads_c/RoadsideSafetyMessage.c	\
+	/home/chengtao/Downloads/v2x_ads_c/ParticipantList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/ParticipantData.c	\
+	/home/chengtao/Downloads/v2x_ads_c/ParticipantType.c	\
+	/home/chengtao/Downloads/v2x_ads_c/SourceType.c	\
+	/home/chengtao/Downloads/v2x_ads_c/SPAT.c	\
+	/home/chengtao/Downloads/v2x_ads_c/IntersectionStateList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/IntersectionState.c	\
+	/home/chengtao/Downloads/v2x_ads_c/IntersectionStatusObject.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PhaseList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Phase.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PhaseStateList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PhaseState.c	\
+	/home/chengtao/Downloads/v2x_ads_c/LightState.c	\
+	/home/chengtao/Downloads/v2x_ads_c/TimeChangeDetails.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PhaseID.c	\
+	/home/chengtao/Downloads/v2x_ads_c/BrakeSystemStatus.c	\
+	/home/chengtao/Downloads/v2x_ads_c/BrakePedalStatus.c	\
+	/home/chengtao/Downloads/v2x_ads_c/BrakeAppliedStatus.c	\
+	/home/chengtao/Downloads/v2x_ads_c/BrakeBoostApplied.c	\
+	/home/chengtao/Downloads/v2x_ads_c/TractionControlStatus.c	\
+	/home/chengtao/Downloads/v2x_ads_c/AntiLockBrakeStatus.c	\
+	/home/chengtao/Downloads/v2x_ads_c/StabilityControlStatus.c	\
+	/home/chengtao/Downloads/v2x_ads_c/AuxiliaryBrakeStatus.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleClassification.c	\
+	/home/chengtao/Downloads/v2x_ads_c/BasicVehicleClass.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleSafetyExtensions.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PathHistory.c	\
+	/home/chengtao/Downloads/v2x_ads_c/FullPositionVector.c	\
+	/home/chengtao/Downloads/v2x_ads_c/GNSSstatus.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PathHistoryPointList.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PathHistoryPoint.c	\
+	/home/chengtao/Downloads/v2x_ads_c/PathPrediction.c	\
+	/home/chengtao/Downloads/v2x_ads_c/Confidence.c	\
+	/home/chengtao/Downloads/v2x_ads_c/RadiusOfCurvature.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleSize.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleWidth.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleLength.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleHeight.c	\
+	/home/chengtao/Downloads/v2x_ads_c/TransmissionState.c	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleEventFlags.c	\
+	/home/chengtao/Downloads/v2x_ads_c/ExteriorLights.c
+
+ASN_MODULE_HDRS=	\
+	/home/chengtao/Downloads/v2x_ads_c/BasicSafetyMessage.h	\
+	/home/chengtao/Downloads/v2x_ads_c/AccelerationSet4Way.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Acceleration.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VerticalAcceleration.h	\
+	/home/chengtao/Downloads/v2x_ads_c/YawRate.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Speed.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Heading.h	\
+	/home/chengtao/Downloads/v2x_ads_c/CoarseHeading.h	\
+	/home/chengtao/Downloads/v2x_ads_c/SteeringWheelAngle.h	\
+	/home/chengtao/Downloads/v2x_ads_c/MotionConfidenceSet.h	\
+	/home/chengtao/Downloads/v2x_ads_c/HeadingConfidence.h	\
+	/home/chengtao/Downloads/v2x_ads_c/SpeedConfidence.h	\
+	/home/chengtao/Downloads/v2x_ads_c/SteeringWheelAngleConfidence.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Latitude.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Longitude.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Elevation.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PositionConfidenceSet.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PositionConfidence.h	\
+	/home/chengtao/Downloads/v2x_ads_c/ElevationConfidence.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Position3D.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PositionOffsetLLV.h	\
+	/home/chengtao/Downloads/v2x_ads_c/OffsetLL-B12.h	\
+	/home/chengtao/Downloads/v2x_ads_c/OffsetLL-B14.h	\
+	/home/chengtao/Downloads/v2x_ads_c/OffsetLL-B16.h	\
+	/home/chengtao/Downloads/v2x_ads_c/OffsetLL-B18.h	\
+	/home/chengtao/Downloads/v2x_ads_c/OffsetLL-B22.h	\
+	/home/chengtao/Downloads/v2x_ads_c/OffsetLL-B24.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LL-24B.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LL-28B.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LL-32B.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LL-36B.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LL-44B.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LL-48B.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Position-LLmD-64b.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PositionOffsetLL.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VerticalOffset.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VertOffset-B07.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VertOffset-B08.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VertOffset-B09.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VertOffset-B10.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VertOffset-B11.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VertOffset-B12.h	\
+	/home/chengtao/Downloads/v2x_ads_c/DSecond.h	\
+	/home/chengtao/Downloads/v2x_ads_c/DYear.h	\
+	/home/chengtao/Downloads/v2x_ads_c/DMonth.h	\
+	/home/chengtao/Downloads/v2x_ads_c/DDay.h	\
+	/home/chengtao/Downloads/v2x_ads_c/DHour.h	\
+	/home/chengtao/Downloads/v2x_ads_c/DMinute.h	\
+	/home/chengtao/Downloads/v2x_ads_c/DTimeOffset.h	\
+	/home/chengtao/Downloads/v2x_ads_c/DDateTime.h	\
+	/home/chengtao/Downloads/v2x_ads_c/MinuteOfTheYear.h	\
+	/home/chengtao/Downloads/v2x_ads_c/TimeMark.h	\
+	/home/chengtao/Downloads/v2x_ads_c/TimeOffset.h	\
+	/home/chengtao/Downloads/v2x_ads_c/TimeConfidence.h	\
+	/home/chengtao/Downloads/v2x_ads_c/MapData.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Lane.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneID.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneWidth.h	\
+	/home/chengtao/Downloads/v2x_ads_c/ConnectsToList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Connection.h	\
+	/home/chengtao/Downloads/v2x_ads_c/ConnectingLane.h	\
+	/home/chengtao/Downloads/v2x_ads_c/AllowedManeuvers.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneSharing.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneTypeAttributes.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Vehicle.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Crosswalk.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Bike.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Sidewalk.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Barrier.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Striping.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-TrackedVehicle.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LaneAttributes-Parking.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LinkList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Link.h	\
+	/home/chengtao/Downloads/v2x_ads_c/MovementList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Movement.h	\
+	/home/chengtao/Downloads/v2x_ads_c/NodeList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Node.h	\
+	/home/chengtao/Downloads/v2x_ads_c/DescriptiveName.h	\
+	/home/chengtao/Downloads/v2x_ads_c/NodeReferenceID.h	\
+	/home/chengtao/Downloads/v2x_ads_c/RoadRegulatorID.h	\
+	/home/chengtao/Downloads/v2x_ads_c/NodeID.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PointList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/RoadPoint.h	\
+	/home/chengtao/Downloads/v2x_ads_c/SpeedLimitList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/RegulatorySpeedLimit.h	\
+	/home/chengtao/Downloads/v2x_ads_c/SpeedLimitType.h	\
+	/home/chengtao/Downloads/v2x_ads_c/MessageFrame.h	\
+	/home/chengtao/Downloads/v2x_ads_c/MsgCount.h	\
+	/home/chengtao/Downloads/v2x_ads_c/RoadSideInformation.h	\
+	/home/chengtao/Downloads/v2x_ads_c/RTEList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/RTEData.h	\
+	/home/chengtao/Downloads/v2x_ads_c/EventType.h	\
+	/home/chengtao/Downloads/v2x_ads_c/EventSource.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Radius.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Description.h	\
+	/home/chengtao/Downloads/v2x_ads_c/RSITimeDetails.h	\
+	/home/chengtao/Downloads/v2x_ads_c/RSIPriority.h	\
+	/home/chengtao/Downloads/v2x_ads_c/ReferencePathList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/ReferencePath.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PathPointList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/ReferenceLinkList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/ReferenceLink.h	\
+	/home/chengtao/Downloads/v2x_ads_c/ReferenceLanes.h	\
+	/home/chengtao/Downloads/v2x_ads_c/RTSList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/RTSData.h	\
+	/home/chengtao/Downloads/v2x_ads_c/SignType.h	\
+	/home/chengtao/Downloads/v2x_ads_c/RoadsideSafetyMessage.h	\
+	/home/chengtao/Downloads/v2x_ads_c/ParticipantList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/ParticipantData.h	\
+	/home/chengtao/Downloads/v2x_ads_c/ParticipantType.h	\
+	/home/chengtao/Downloads/v2x_ads_c/SourceType.h	\
+	/home/chengtao/Downloads/v2x_ads_c/SPAT.h	\
+	/home/chengtao/Downloads/v2x_ads_c/IntersectionStateList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/IntersectionState.h	\
+	/home/chengtao/Downloads/v2x_ads_c/IntersectionStatusObject.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PhaseList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Phase.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PhaseStateList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PhaseState.h	\
+	/home/chengtao/Downloads/v2x_ads_c/LightState.h	\
+	/home/chengtao/Downloads/v2x_ads_c/TimeChangeDetails.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PhaseID.h	\
+	/home/chengtao/Downloads/v2x_ads_c/BrakeSystemStatus.h	\
+	/home/chengtao/Downloads/v2x_ads_c/BrakePedalStatus.h	\
+	/home/chengtao/Downloads/v2x_ads_c/BrakeAppliedStatus.h	\
+	/home/chengtao/Downloads/v2x_ads_c/BrakeBoostApplied.h	\
+	/home/chengtao/Downloads/v2x_ads_c/TractionControlStatus.h	\
+	/home/chengtao/Downloads/v2x_ads_c/AntiLockBrakeStatus.h	\
+	/home/chengtao/Downloads/v2x_ads_c/StabilityControlStatus.h	\
+	/home/chengtao/Downloads/v2x_ads_c/AuxiliaryBrakeStatus.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleClassification.h	\
+	/home/chengtao/Downloads/v2x_ads_c/BasicVehicleClass.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleSafetyExtensions.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PathHistory.h	\
+	/home/chengtao/Downloads/v2x_ads_c/FullPositionVector.h	\
+	/home/chengtao/Downloads/v2x_ads_c/GNSSstatus.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PathHistoryPointList.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PathHistoryPoint.h	\
+	/home/chengtao/Downloads/v2x_ads_c/PathPrediction.h	\
+	/home/chengtao/Downloads/v2x_ads_c/Confidence.h	\
+	/home/chengtao/Downloads/v2x_ads_c/RadiusOfCurvature.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleSize.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleWidth.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleLength.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleHeight.h	\
+	/home/chengtao/Downloads/v2x_ads_c/TransmissionState.h	\
+	/home/chengtao/Downloads/v2x_ads_c/VehicleEventFlags.h	\
+	/home/chengtao/Downloads/v2x_ads_c/ExteriorLights.h
+
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/OPEN_TYPE.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/OPEN_TYPE.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/constr_CHOICE.h
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/IA5String.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/IA5String.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/OCTET_STRING.h
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/INTEGER.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/INTEGER.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/NativeEnumerated.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/NativeEnumerated.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/NativeInteger.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/NativeInteger.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/asn_SEQUENCE_OF.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/asn_SEQUENCE_OF.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/asn_SET_OF.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/asn_SET_OF.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/constr_CHOICE.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/constr_SEQUENCE.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/constr_SEQUENCE.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/constr_SEQUENCE_OF.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/constr_SEQUENCE_OF.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/constr_SET_OF.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/constr_SET_OF.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/asn_application.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/asn_application.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/asn_ioc.h
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/asn_system.h
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/asn_codecs.h
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/asn_internal.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/asn_internal.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/asn_random_fill.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/asn_random_fill.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/asn_bit_data.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/asn_bit_data.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/OCTET_STRING.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/BIT_STRING.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/BIT_STRING.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/asn_codecs_prim.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/asn_codecs_prim.h
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/ber_tlv_length.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/ber_tlv_length.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/ber_tlv_tag.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/ber_tlv_tag.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/ber_decoder.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/ber_decoder.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/der_encoder.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/der_encoder.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/constr_TYPE.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/constr_TYPE.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/constraints.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/constraints.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/xer_support.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/xer_support.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/xer_decoder.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/xer_decoder.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/xer_encoder.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/xer_encoder.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/per_support.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/per_support.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/per_decoder.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/per_decoder.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/per_encoder.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/per_encoder.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/per_opentype.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/per_opentype.c
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/oer_decoder.h
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/oer_encoder.h
+ASN_MODULE_HDRS+=/home/chengtao/Downloads/v2x_ads_c/oer_support.h
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/oer_decoder.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/oer_encoder.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/oer_support.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/OPEN_TYPE_oer.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/INTEGER_oer.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/BIT_STRING_oer.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/OCTET_STRING_oer.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/NativeInteger_oer.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/NativeEnumerated_oer.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/constr_CHOICE_oer.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/constr_SEQUENCE_oer.c
+ASN_MODULE_SRCS+=/home/chengtao/Downloads/v2x_ads_c/constr_SET_OF_oer.c
+
+ASN_MODULE_CFLAGS=
+
+lib_LTLIBRARIES+=libasncodec.la
+libasncodec_la_SOURCES=$(ASN_MODULE_SRCS) $(ASN_MODULE_HDRS)
+libasncodec_la_CPPFLAGS=-I$(top_srcdir)//home/chengtao/Downloads/v2x_ads_c/
+libasncodec_la_CFLAGS=$(ASN_MODULE_CFLAGS)
+libasncodec_la_LDFLAGS=-lm

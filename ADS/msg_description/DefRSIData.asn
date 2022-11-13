@@ -1,0 +1,177 @@
+/*
+* 交通事件相关信息
+*/
+DefRSIData DEFINITIONS AUTOMATIC TAGS ::= BEGIN
+
+EXPORTS RTEList;
+IMPORTS PositionOffsetLLV FROM DefPositionOffset
+        MinuteOfTheYear,TimeConfidence FROM DefTime
+        NodeReferenceID FROM MapNode
+        Confidence FROM VehSafetyExt;
+
+    -- Road Traffic Event List
+	RTEList ::= SEQUENCE (SIZE(1..8)) OF RTEData
+
+	
+	-- 该数据帧中，包含该交通事件的信息源、发生区域、时效、优先级以及影响区域等。还可以用文本的形式，对事件信息进行补充描述或说明。
+	RTEData ::= SEQUENCE {
+		rteId INTEGER (0..255),							-- local ID of this rte information set by RSU
+		
+		eventType EventType,                            -- 交通事件的类型
+		-- Type of event, according to China GB/T 29100-2012
+		eventSource EventSource,                        -- 交通事件的信息来源
+		eventPos PositionOffsetLLV OPTIONAL,            -- event 三维偏移量
+		eventRadius Radius OPTIONAL,                    -- 绝对值半径
+		description Description OPTIONAL,               -- 描述信息
+		timeDetails RSITimeDetails OPTIONAL,            -- 生效时间属性
+		priority RSIPriority OPTIONAL,                  -- RSI消息中不同类型交通事件或交通标志的优先级
+		referencePaths ReferencePathList OPTIONAL,      -- 关联路径集合
+		referenceLinks ReferenceLinkList OPTIONAL,      -- 关联路段集合。
+		eventConfidence Confidence OPTIONAL,
+		-- indicate the event confidence set by event source
+		-- the probability/confidence of the detected event
+		-- being truly extent at a certain place,
+		-- to help vehicle determine whether to trust the received information.
+		...
+	}
+
+    -- 定义道路交通事件的类型
+    EventType ::= INTEGER (0..65535)
+    -- Traffic event type according to AppendixA and China GB/T 29100-2012
+
+    -- 定义道路交通事件的信息来源。
+    EventSource ::= ENUMERATED {
+        unknown(0), -- 0 Unknown
+        police(1), -- 1 traffic police
+        government(2), -- 2 govenment
+        meteorological(3), -- 3 meteorological department
+        internet(4), -- 4 internet services
+        detection(5), -- 5 local detection
+        ...
+    }
+
+    -- 表示绝对值半径大小。
+    Radius ::= INTEGER (0..65535)
+    -- Define radius
+    -- Unit is 0.1m
+
+    -- 定义文本描述信息。提供两种编码形式。
+    -- 提供ASCII字符文本形式，支持长度1字节到512字节。
+    -- 提供中文编码形式，符合GB2312-80的编码规则，1个中文字符由2字节信息编码，支持长度1到256个中文字符。
+    Description ::= CHOICE{
+        textString IA5String (SIZE(1..512)),
+        -- ASCII text
+        textGB2312 OCTET STRING (SIZE(2..512))
+        -- text using Chinese-character encoding GB2312-80
+    }
+
+    -- 定义道路交通事件和道路交通标志信息的生效时间属性。
+    -- 用UTC世界标准时间定义，包括生效起始时刻、结束时刻以及结束时刻的置信度。精确到分钟。
+    RSITimeDetails ::= SEQUENCE {
+        startTime MinuteOfTheYear OPTIONAL,
+        endTime MinuteOfTheYear OPTIONAL,
+        -- Exact or estimated end time
+        endTimeConfidence TimeConfidence OPTIONAL
+    }
+
+    -- 表示RSI消息中不同类型交通事件或交通标志的优先级。
+    -- 数值长度占8位，其中低五位为0，为无效位，高三位为有效数据位。数值有效范围是B00000000到B11100000，分别表示8档由低到高的优先级。
+    RSIPriority ::= OCTET STRING (SIZE(1))
+    -- The lower five bits are reserved and shall be set to zero
+    -- Value from B00000000 to B11100000 represents the lowest to the highest level
+
+    -- 定义道路交通事件和标志的关联路径集合。用于RSI消息中
+    ReferencePathList ::= SEQUENCE (SIZE(1..8)) OF ReferencePath
+
+    -- 定义道路交通事件和标志的关联路径。
+    -- 关联路径用有序的位置点列来描述交通事件的影响区域中心线，同时用半径来表示该影响区域边界离中心线的垂直距离，反映该区域的宽度以覆盖实际路段。
+    ReferencePath ::= SEQUENCE {
+        activePath PathPointList,
+        -- RSI is active for vehicles within this path
+        -- Points are listed from upstream to downstream
+        -- along the vehicle drive direction.
+        -- One path includes at least 1 points.
+        -- A path with only 1 point means a round alert area
+        pathRadius Radius
+        -- The biggest distance away from the alert path
+        -- within which the warning is active.
+    }
+    
+
+    -- 用有序位置点列的方式，定义一个有向的作用范围。
+    -- 例如，该数据帧应用于RSI消息，配合半径信息，用来表示一个的车辆行进轨迹区段，该区段由有序位置点列组成，排列顺序与车辆行进方向一致。
+    PathPointList ::= SEQUENCE (SIZE(1..32)) OF PositionOffsetLLV
+    -- Path point list for RTS message
+
+    -- 定义关联路段集合。
+    ReferenceLinkList ::= SEQUENCE (SIZE(1..16)) OF ReferenceLink
+
+
+    -- 定义关联路段，用路段的上下游节点ID表示。
+    -- 路段的上下游节点唯一确定一条路段。
+    -- 可包含具体的关联车道。如不指定车道，则默认为该路段所有车道。
+    ReferenceLink ::= SEQUENCE {
+        -- this Link is from Node of upstreamNodeId to Node of downstreamNodeId
+        upstreamNodeId NodeReferenceID,
+        downstreamNodeId NodeReferenceID,
+        referenceLanes ReferenceLanes OPTIONAL
+        -- Provide reference lanes if is necessary
+        -- Refer to all lanes if this data is not given
+    }
+
+    -- 定义路段中指定的关联车道。
+    -- 将指定车道号对应的比特位置1表示该车道为有效的关联车道。最多支持15条车道。车道号，以该车道行驶方向为参考，自左向右从1开始编号。
+    ReferenceLanes ::= BIT STRING {
+        -- With bits as defined:
+        reserved(0),
+        lane1(1),
+        lane2(2),
+        lane3(3),
+        lane4(4),
+        lane5(5),
+        lane6(6),
+        lane7(7),
+        lane8(8),
+        lane9(9),
+        lane10(10),
+        lane11(11),
+        lane12(12),
+        lane13(13),
+        lane14(14),
+        lane15(15)
+    } (SIZE (16))
+        -- Set bit to 1 if the related lane is effective
+        -- Support maximum 15 lanes
+
+    -- 定义道路交通标志集合。
+	-- 至少包含1个道路交通标志信息，最多包含16个。
+	RTSList ::= SEQUENCE (SIZE(1..16)) OF RTSData
+
+
+	RTSData ::= SEQUENCE {
+		rtsId INTEGER (0..255),
+		-- local ID of this rts information set by RSU
+		signType SignType,
+		-- Type of sign, according to China GB 5768.2-2009
+		signPos PositionOffsetLLV OPTIONAL,
+		-- Position of the traffic sign, if exists
+		description Description OPTIONAL,
+		-- Additional description to the sign
+		timeDetails RSITimeDetails OPTIONAL,
+		-- start time or end time when this sign is active, if existed
+		priority RSIPriority OPTIONAL,
+		-- the urgency of this RSI data, a relative
+		-- degree of merit compared with other RSI data
+		referencePaths ReferencePathList OPTIONAL,
+		-- Related paths of this traffic sign
+		referenceLinks ReferenceLinkList OPTIONAL,
+		-- Related links of this traffic sign
+		...
+	}
+	
+
+	SignType ::= INTEGER (0..65535)
+	-- Value 0 means unknown type or using text description
+	-- Traffic sign types refer to China GB 5768.2-2009
+
+END
